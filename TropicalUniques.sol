@@ -11,9 +11,10 @@ pragma solidity 0.6.12;
 
 import "./libs/ITropicalUniques.sol";
 import "./libs/Operable.sol";
+import "./libs/TimeLock.sol";
 
 // Tropical Unique Addresses, to be excluded from: antiBot, antiWhale, Bonuses and features.
-contract TropicalUniques is ITropicalUniques, Operable {
+contract TropicalUniques is ITropicalUniques, Operable, TimeLock {
     
     mapping (address => bool) uniqueAddress;
 
@@ -21,7 +22,7 @@ contract TropicalUniques is ITropicalUniques, Operable {
         setUniqueAddress(address(0), true);
     }
 
-    function setUniqueAddress(address _address, bool _isUnique) public override onlyOperator {
+    function setUniqueAddress(address _address, bool _isUnique) public override onlyOperator timeLock {
         uniqueAddress[_address] = _isUnique;
     }
 
