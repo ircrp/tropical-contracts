@@ -1,0 +1,46 @@
+// SPDX-License-Identifier: MIT
+
+/*------------------------------------------------------------------------------------------
+████████████████████████████████████████████████████████████████████████████████████████████
+█─▄─▄─█▄─▄▄▀█─▄▄─█▄─▄▄─█▄─▄█─▄▄▄─██▀▄─██▄─▄█████▄─▄▄─█▄─▄█▄─▀█▄─▄██▀▄─██▄─▀█▄─▄█─▄▄▄─█▄─▄▄─█
+███─████─▄─▄█─██─██─▄▄▄██─██─███▀██─▀─███─██▀████─▄████─███─█▄▀─███─▀─███─█▄▀─██─███▀██─▄█▀█
+▀▀▄▄▄▀▀▄▄▀▄▄▀▄▄▄▄▀▄▄▄▀▀▀▄▄▄▀▄▄▄▄▄▀▄▄▀▄▄▀▄▄▄▄▄▀▀▀▄▄▄▀▀▀▄▄▄▀▄▄▄▀▀▄▄▀▄▄▀▄▄▀▄▄▄▀▀▄▄▀▄▄▄▄▄▀▄▄▄▄▄▀
+-------------------------------------------------------------------------------------------*/
+
+pragma solidity >=0.6.12;
+
+import "@openzeppelin/contracts/access/Ownable.sol";
+
+// Tropical Finance Timelock
+
+abstract contract TimeLock is Ownable {
+    uint unlockAtBlock = 0;
+    uint mintUnlockAtBlock = 0;
+
+    modifier timeLock() {
+        require(block.number >= unlockAtBlock, "Tropical::TimeLock: Function is timelocked");
+        _;
+    }
+
+    modifier mintLock() {
+        require(block.number >= mintUnlockAtBlock, "Tropical::TimeLock: Function is timelocked");
+        _;
+    }
+
+    function lockTime(uint _unlockAtBlock) public onlyOwner {
+        unlockAtBlock = _unlockAtBlock;
+    }
+
+    function lockMint(uint _mintUnlockAtBlock) public onlyOwner {
+        mintUnlockAtBlock = _mintUnlockAtBlock;
+    }
+    
+    function getUnlockAtBlock() public view returns (uint) {
+        return unlockAtBlock;
+    }
+
+    function getMintUnlockAtBlock() public view returns (uint) {
+        return mintUnlockAtBlock;
+    }
+
+}
