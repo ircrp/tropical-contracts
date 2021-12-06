@@ -27,11 +27,11 @@ abstract contract TimeLock is Ownable {
         _;
     }
 
-    function lockTime(uint _unlockAtBlock) public onlyOwner {
+    function lockTime(uint _unlockAtBlock) public onlyOwner timeLock {
         unlockAtBlock = _unlockAtBlock;
     }
 
-    function lockMint(uint _mintUnlockAtBlock) public onlyOwner {
+    function lockMint(uint _mintUnlockAtBlock) public onlyOwner mintLock {
         mintUnlockAtBlock = _mintUnlockAtBlock;
     }
     
