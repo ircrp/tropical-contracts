@@ -106,6 +106,19 @@ contract TravelBureau is Ownable, ReentrancyGuard, TimeLock {
     // XXX DO NOT add the same LP token more than once. Rewards will be messed up if you do.
     function add(uint256 _allocPoint, IBEP20 _lpToken, uint16 _depositFeeBP, bool _withUpdate) public onlyOwner timeLock {
         require(_depositFeeBP <= 400, "add: deposit fee exceeds limit");
+
+        // Check Duplicated LP Address
+        bool pass = true;
+        for(uint i = 0; i < poolInfo.length; ++i) {
+            if (address(poolInfo[i].lpToken) == address(_lpToken)) {
+                pass = false;
+                break;
+            }
+        }
+        require(pass, "add: a Pool with this lp address already exists");
+
+        require(poolInfo.length < 80, "add: Pool limit exceeded, no many pools can be added");
+
         if (_withUpdate) {
             massUpdatePools();
         }
