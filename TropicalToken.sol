@@ -140,7 +140,7 @@ contract TropicalToken is BEP20, TimeLock, Operable {
         if(transferTax > 0 && totalSupplyAndBurnt() < presaleHardCapTokens) {
             // Deflationary strategy to decrease selling pressure by presale buyers, transferTax% of amount will be burned.
             uint256 burnAmount = amount.mul(transferTax).div(10000);
-            super._transfer(sender, address(0), burnAmount);
+            _burn(sender, burnAmount);
             amount = amount.sub(burnAmount);
         }
         super._transfer(sender, recipient, amount);
