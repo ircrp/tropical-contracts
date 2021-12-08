@@ -15,7 +15,7 @@ import "./libs/ITropicalUniques.sol";
 import "./libs/Operable.sol";
 
 // TropicalToken with Governance.
-contract TropicalToken is BEP20, TimeLock, Operable {
+contract TropicalToken is BEP20, TimeLock {
 
     // Maximum Supply
     uint256 public maximumSupply = 31000000e18;
