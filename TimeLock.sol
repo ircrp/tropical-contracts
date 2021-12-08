@@ -10,10 +10,11 @@
 pragma solidity >=0.6.12;
 
 import "@openzeppelin/contracts/access/Ownable.sol";
+import "./Operable.sol";
 
 // Tropical Finance Timelock
 
-abstract contract TimeLock is Ownable {
+abstract contract TimeLock is Ownable, Operable {
     uint unlockAtBlock = 0;
     uint mintUnlockAtBlock = 0;
 
@@ -27,7 +28,7 @@ abstract contract TimeLock is Ownable {
         _;
     }
 
-    function lockTime(uint _unlockAtBlock) public onlyOwner timeLock {
+    function lockTime(uint _unlockAtBlock) public onlyOperator timeLock {
         unlockAtBlock = _unlockAtBlock;
     }
 
