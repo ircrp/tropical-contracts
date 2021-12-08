@@ -296,12 +296,12 @@ contract TravelBureau is Ownable, ReentrancyGuard, TimeLock {
     }
 
     // Update dev address by the previous dev.
-    function setDevAddress(address _devAddress) public {
+    function setDevAddress(address _devAddress) public timeLock {
         require(msg.sender == devAddress, "setDevAddress: FORBIDDEN");
         devAddress = _devAddress;
     }
 
-    function setFeeAddress(address _feeAddress) public {
+    function setFeeAddress(address _feeAddress) public timeLock {
         require(msg.sender == feeAddress, "setFeeAddress: FORBIDDEN");
         feeAddress = _feeAddress;
     }
